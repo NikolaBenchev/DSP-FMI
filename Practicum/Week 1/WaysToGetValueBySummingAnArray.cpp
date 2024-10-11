@@ -8,21 +8,21 @@ void pr(std::vector<int> addedNums) {
     std::cout << std::endl;
 }
 
-void printSums(int currIndex, int value, std::vector<int> addedNums, int* arr) {
-    if(value < 0)
+void printSums(int currIndex, int value, std::vector<int> addedNums, int arr[], int size) {
+    if(value < 0 || currIndex >= size)
         return;
-    if(value === 0) {
+    if(value == 0) {
         pr(addedNums);
         return;
     }
     addedNums.push_back(arr[currIndex]);
-    printSums(currIndex, value - arr[currIndex], arr);
+    printSums(currIndex, value - arr[currIndex], addedNums, arr, size);
     addedNums.pop_back();
-    printSums(currIndex - 1, value, arr);
+    printSums(currIndex + 1, value, addedNums, arr, size);
 }
 
-void printSums(int value, int* arr) {
-    printSums(0, value, {}, arr);
+void printSums(int value, int arr[], int size) {
+    printSums(0, value, {}, arr, size);
 }
 
 int main() {
@@ -34,6 +34,6 @@ int main() {
         std::cin >> arr[i];
     }
 
-    printSums(value, arr);
+    printSums(value, arr, size);
     return 0;
 }
