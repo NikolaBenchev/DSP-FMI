@@ -3,6 +3,10 @@
 
 int main() {
     Vector<int> v;
-    std::cout << "asd" << std::endl;
+    v.push_back(3);
+    v.push_back(4);
+    v.push_back(13);
+
+    std::cout << v[1] << std::endl;
     return 0;
 }
