@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.ts": "typescript",
         "array": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
@@ -43,6 +44,10 @@
         "ostream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "bitset": "cpp",
+        "optional": "cpp",
+        "fstream": "cpp",
+        "sstream": "cpp"
     }
 }
