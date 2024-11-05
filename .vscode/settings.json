@@ -48,6 +48,8 @@
         "bitset": "cpp",
         "optional": "cpp",
         "fstream": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "stack": "cpp",
+        "map": "cpp"
     }
 }
