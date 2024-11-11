@@ -5,6 +5,9 @@ template<class T>
 class ParticleSystem {
 public:
     using Id = int;
+    std::size_t size() {
+        return elements.size() - empty.size();
+    }
 
     Id add(T &el) {
         if(!empty.empty()) {
@@ -19,19 +22,22 @@ public:
     }
 
     void remove(Id id) {
+        if(id >= elements.size()) throw std::invalid_argument("Invalid id");
+        if(!elements[id].valid) throw std::invalid_argument("Invalid id");
+
         empty.push(id);
         elements[id].valid = false;
     }
 
     T &operator[](Id id) {
-        if(!elements[id].valid)
-            throw std::invalid_argument("invalid id");
+        if(id >= elements.size()) throw std::invalid_argument("Invalid id");
+        if(!elements[id].valid) throw std::invalid_argument("invalid id");
 
         return elements[id].value;
     }
 
     //TODO: iterators: begin() end()
-private:
+protected:
     struct ElementData {
         T value;
         bool valid;
