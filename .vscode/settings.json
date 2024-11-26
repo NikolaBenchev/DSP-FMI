@@ -50,6 +50,7 @@
         "fstream": "cpp",
         "sstream": "cpp",
         "stack": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "list": "cpp"
     }
 }

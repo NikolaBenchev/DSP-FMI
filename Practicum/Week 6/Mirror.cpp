@@ -7,24 +7,6 @@ struct Node{
     Node* prev;
 };
 
-
-Node<int>* removeConsecutiveDuplicates(Node<int>* head) {
-    Node<int>* curr = head->next;
-    while(curr != head) {
-        while(curr->next != head) {
-            if(curr->value != curr->next->value)
-                break; 
-            Node<int>* temp = curr->next;
-            curr->next = curr->next->next;
-            delete temp;
-        }
-        if(curr->next)
-            curr->next->prev = curr;
-        curr = curr->next;
-    }
-    return head;
-}
-
 Node<int>* mirror(Node<int>* head) {
     Node<int>* curr = head->prev;
     Node<int>* currMirror = head->prev;
@@ -67,7 +49,6 @@ int main() {
     head->prev = last;
 
     head = mirror(head);
-    // head = removeConsecutiveDuplicates(head);
     print(head);
     return 0;
 }
