@@ -1,5 +1,6 @@
 #include<fstream>
 #include<iostream>
+#include<map>
 
 struct TrieNode {
 	int value; 
@@ -17,22 +18,37 @@ class Trie {
 		Trie() {
 			this->root = new TrieNode();
 		}
-	
-		Trie(const Trie& other) = delete;		
 
-		void addWord(std::string word, int value) {
+		~Trie() {
+			free(this->root);
+		}	
+
+		Trie(const Trie& other) = delete;
+		Trie &operator=(const Trie& other) = delete;
+		
+
+		void addWord(std::string word, const int value) {
 			addWordHelper(this->root, word, value);
 		}
 
-		void print() {
+		void print() const {
 			printHelper(this->root, "");
 		}
 		
-		int getValue(std::string word) {
+		int getValue(std::string word) const {
 			return getValueHelper(this->root, word, 0);
 		}
 	private:
 		TrieNode* root;
+		
+		void free(TrieNode* currNode) {
+			if(currNode == nullptr) return;
+			for(int i = 0; i < 26; i++) {
+				free(currNode->child[i]);
+			}
+			delete currNode;
+		}	
+
 		void addWordHelper(TrieNode* root, std::string word, int value) {
 			TrieNode* curr = root;
 			for(char c : word) {
@@ -45,7 +61,7 @@ class Trie {
 			curr->value = value;
 		}
 
-		void printHelper(TrieNode* curr, std::string currWord) {
+		void printHelper(TrieNode* curr, std::string currWord) const {
 			if(curr->value != -1)
 				std::cout << currWord << " " << curr->value << std::endl;
 			for(int i = 0; i < 26; i++) {
@@ -55,7 +71,7 @@ class Trie {
 				}
 			}
 		}
-		int getValueHelper(TrieNode* curr, std::string word, int currLength) {
+		int getValueHelper(TrieNode* curr, std::string word, int currLength) const {
 			if(!curr)
 				return -1;
 			if(word.length() == currLength)
@@ -66,18 +82,26 @@ class Trie {
 };
 
 struct HeapNode {
-	std::string value;		
+	int value;
+	std::string word;
 };
 
 class Heap{
 	public:
-		void push() {
+		void push(const std::string word, const int value) {
 		}
-		Heap(const int K) {
-			
+		Heap(const size_t maxNumberOfNodeChildren) {
+			this->maxNumberOfNodeChildren = maxNumberOfNodeChildren;
+		}
+
+		size_t getSize() {
+			return this->currSize;
 		}
 	private:
-		HeapNode* root;
+		size_t maxSize;
+		size_t currSize;
+		size_t maxNumberOfNodeChildren;
+		HeapNode* arr;
 };
 
 int main() {
@@ -102,16 +126,31 @@ int main() {
 		trie.addWord(word, value);
 	}
 
-	f.close();
+	dictFile.close();
 	
 //	trie.print();
 	
 	std::cin >> fileName;
 
-	std::ifstream textFile(filename + ".txt");
-	if(!.is_open()) {
+	std::ifstream textFile(fileName + ".txt");
+	if(!textFile.is_open()) {
 		std::cout << "file not found" << std::endl;
 		return 1;
 	}
+	
+	std::map<std::string, int> wordOccurances;	
+	std::string word;
+	while(textFile >> word) {
+		if(wordOccurances[word])
+			wordOccurances[word] += 1;
+		else
+			wordOccurances[word] = 1;
+	}
+
+	for(std::map<std::string, int>::iterator it = wordOccurances.begin();
+		it != wordOccurances.end(); it++) {
+		
+	}
+	
 	return 0;
 }
